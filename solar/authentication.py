@@ -8,7 +8,7 @@ class Authentication:
         self.refresh_token = None
 
     def login(self):
-        url = "https://pv.inteless.com/login"
+        url = "https://pv.inteless.com/oauth/token"
         payload = {
             "username": self.username,
             "password": self.password,
