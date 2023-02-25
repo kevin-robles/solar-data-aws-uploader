@@ -1,6 +1,7 @@
 import requests
 from datetime import datetime, timedelta
 
+URL = "https://pv.inteless.com/oauth/token"
 
 class Authentication:
     """
@@ -13,19 +14,18 @@ class Authentication:
         password: password for the account to be used
 
     """
-    def __init__(self, username, password):
+    def __init__(self, username, password) -> None:
         self.username = username
         self.password = password
         self.access_token = None
         self.refresh_token = None
         self.token_expiration = None
 
-    def login(self):
+    def login(self) -> None:
         """
         Executes a login to the website and stores credentials.
 
         """
-        url = "https://pv.inteless.com/oauth/token"
         payload = {
             "username": self.username,
             "password": self.password,
@@ -35,14 +35,14 @@ class Authentication:
         headers = {
             "Content-Type": "application/json"
         }
-        response = requests.post(url, json=payload, headers=headers)
+        response = requests.post(URL, json=payload, headers=headers)
         data = response.json()["data"]
         self.access_token = data["access_token"]
         self.refresh_token = data["refresh_token"]
         expires_in = data["expires_in"]
         self.token_expiration = datetime.now() + timedelta(seconds=expires_in)
 
-    def get_access_token(self):
+    def get_access_token(self) -> str:
         """
         Returns the current access token.
 
@@ -53,7 +53,7 @@ class Authentication:
             self.login()
         return self.access_token
 
-    def get_refresh_token(self):
+    def get_refresh_token(self) -> str:
         """
         Returns the current refresh token.
 
@@ -64,7 +64,7 @@ class Authentication:
             self.login()
         return self.refresh_token
 
-    def refresh_token_if_expired(self):
+    def refresh_token_if_expired(self) -> None:
         """
         Refreshes the token if its expired.
 
