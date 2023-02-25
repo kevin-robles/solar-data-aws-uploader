@@ -1,7 +1,7 @@
 import requests
 from typing import Union
 
-FILE_URL = "https://pv.inteless.com/api/v1/workdata/dynamic/download?"
+FILE_URL = "https://pv.inteless.com/api/v1/workdata/dynamic/download"
 LANGUAGE = "en"
 TYPE = "1"
 
@@ -29,7 +29,10 @@ class WebsiteConnection:
         }
         response = requests.get(FILE_URL, params=payload, headers=headers)
         if response.status_code == 200:
-            return response.content
+            filename = f"{self.serial_number}_{self.begin_date}_{self.end_date}.csv"
+            with open(filename, "wb") as f:
+                f.write(response.content)
+            return filename
         else:
-            return None
+            raise Exception("Failed to retrieve file")
 
