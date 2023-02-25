@@ -21,7 +21,7 @@ class Main:
         access_token = self.auth.access_token
         today = datetime.now().strftime('%Y-%m-%d')
         yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
-        file_generator = WebsiteConnection(access_token, self.username, self.password, today, yesterday)
+        file_generator = WebsiteConnection(access_token, self.serial_number, today, today)
         file = file_generator.get_file()
 
 

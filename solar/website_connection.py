@@ -19,7 +19,7 @@ class WebsiteConnection:
     def get_file(self) -> Union[bytes, None]:
         payload = {
             "sn": self.serial_number,
-            "date_range": f"{self.begin_date},{self.end_date}",
+            "dateRange": f"{self.begin_date},{self.end_date}",
             "type": TYPE,
             "lan": LANGUAGE
         }
@@ -27,9 +27,10 @@ class WebsiteConnection:
             "Content-Type": "application/json",
             "Authorization": f"Bearer {self.access_token}"
         }
+
         response = requests.get(FILE_URL, params=payload, headers=headers)
         if response.status_code == 200:
-            filename = f"{self.serial_number}_{self.begin_date}_{self.end_date}.csv"
+            filename = f"{self.serial_number}_{self.begin_date}_{self.end_date}.xlsx"
             with open(filename, "wb") as f:
                 f.write(response.content)
             return filename
