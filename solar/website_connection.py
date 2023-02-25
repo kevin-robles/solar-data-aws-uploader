@@ -19,7 +19,7 @@ class WebsiteConnection:
     def get_file(self) -> Union[bytes, None]:
         payload = {
             "sn": self.serial_number,
-            "date_range": self.begin_date + "," + self.end_date,
+            "date_range": f"{self.begin_date},{self.end_date}",
             "type": TYPE,
             "lan": LANGUAGE
         }
