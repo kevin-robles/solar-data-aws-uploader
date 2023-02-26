@@ -1,4 +1,5 @@
 import requests
+from io import BytesIO
 from typing import Union
 
 FILE_URL = "https://pv.inteless.com/api/v1/workdata/dynamic/download"
@@ -30,10 +31,7 @@ class WebsiteConnection:
 
         response = requests.get(FILE_URL, params=payload, headers=headers)
         if response.status_code == 200:
-            filename = f"{self.serial_number}_{self.begin_date}_{self.end_date}.xlsx"
-            with open(filename, "wb") as f:
-                f.write(response.content)
-            return filename
+            return BytesIO(response.content)
         else:
             raise Exception("Failed to retrieve file")
 
