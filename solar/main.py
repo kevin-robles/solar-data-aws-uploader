@@ -1,14 +1,13 @@
-import os
 import json
-import pathlib as pl
+import pathlib
 from authentication import Authentication
 from website_connection import WebsiteConnection
 from datetime import datetime, timedelta
 
 class Main:
     def __init__(self):
-        base_dir = pl.Path(__file__).parent.parent
-        final_path = os.path.join(base_dir, 'secrets.json')
+        base_dir = pathlib.Path(__file__).parent.parent
+        final_path = base_dir / 'secrets.json'
         with open(final_path) as f:
             secrets = json.load(f)
         self.username = secrets['PV_USERNAME']
