@@ -8,16 +8,28 @@ TYPE = "1"
 
 
 class WebsiteConnection:
+    """
+    This class is used to retrieve the file from the website.
+
+    Args:
+        access_token: access token from website's oauth2
+        serial_number: the serial number of the inverter that streams the data
+        begin_date: The date from which to start retrieving data
+        end_date: The date from which to finish retrieving data
+
+    """
     def __init__(self, access_token, serial_number, begin_date, end_date) -> None:
         self.access_token = access_token
         self.serial_number = serial_number
         self.begin_date = begin_date
         self.end_date = end_date
 
-    def generate_retrieval_url(self) -> str:
-        return FILE_URL  # plus logic
-
     def get_file(self) -> Union[bytes, None]:
+        """
+        Retrieves file from the website.
+
+        :return: An object wrapped in BytesIO to maintain the object as a file.
+        """
         payload = {
             "sn": self.serial_number,
             "dateRange": f"{self.begin_date},{self.end_date}",
